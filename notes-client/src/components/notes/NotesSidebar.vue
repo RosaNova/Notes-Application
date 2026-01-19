@@ -38,7 +38,7 @@ const handleNewNote = () => {
     
     <!-- Header -->
     <div class="p-4 border-b border-sidebar-border">
-      <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center mt-6 md:mt-0 justify-between mb-4">
         <h1 class="text-xl font-serif font-semibold text-foreground">
           Notes
         </h1>
