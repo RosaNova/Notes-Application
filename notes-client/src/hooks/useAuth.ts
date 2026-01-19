@@ -35,11 +35,9 @@ export function useAuth() {
   // -----------------------------
   const login = async (email: string, password: string) => {
     loading.value = true;
-    console.log({email , password});
     try {
-      const res = await api.post("/users/auth/login", { email, password });
+      const res = await api.post("/auth/login", { email, password });
       
-       
       const token = res.data.token;
       localStorage.setItem("user", JSON.stringify({ token }));
 
@@ -59,10 +57,10 @@ export function useAuth() {
   // -----------------------------
   // Register
   // -----------------------------
-  const register = async (email: string, password: string) => {
+  const register = async (username: string , email: string, password: string) => {
     loading.value = true;
     try {
-      await api.post("/auth/register", { email, password });
+      await api.post("/auth/register", { username, email, password });
       return { success: true };
     } catch (err: any) {
       return {

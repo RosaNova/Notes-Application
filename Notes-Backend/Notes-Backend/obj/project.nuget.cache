@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "JpEri07yP7E=",
+  "dgSpecHash": "h7Hb+zyjfMI=",
   "success": true,
   "projectFilePath": "/home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/Notes-Backend.csproj",
   "expectedPackageFiles": [
@@ -42,7 +42,10 @@
     "/home/r-sunrise/.nuget/packages/system.memory.data/8.0.1/system.memory.data.8.0.1.nupkg.sha512",
     "/home/r-sunrise/.nuget/packages/system.security.cryptography.pkcs/8.0.1/system.security.cryptography.pkcs.8.0.1.nupkg.sha512",
     "/home/r-sunrise/.nuget/packages/system.security.cryptography.protecteddata/8.0.0/system.security.cryptography.protecteddata.8.0.0.nupkg.sha512",
-    "/home/r-sunrise/.nuget/packages/system.valuetuple/4.5.0/system.valuetuple.4.5.0.nupkg.sha512"
+    "/home/r-sunrise/.nuget/packages/system.valuetuple/4.5.0/system.valuetuple.4.5.0.nupkg.sha512",
+    "/home/r-sunrise/.nuget/packages/microsoft.netcore.app.ref/8.0.23/microsoft.netcore.app.ref.8.0.23.nupkg.sha512",
+    "/home/r-sunrise/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.23/microsoft.aspnetcore.app.ref.8.0.23.nupkg.sha512",
+    "/home/r-sunrise/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.23/microsoft.netcore.app.host.linux-x64.8.0.23.nupkg.sha512"
   ],
   "logs": []
 }

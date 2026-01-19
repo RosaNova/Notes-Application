@@ -1,11 +1,8 @@
-using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Notes_Backend.Models;
 using Notes_Backend.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using Notes_Backend.Utilities;
 namespace Notes_Backend.Controllers
 {
     [ApiController]
@@ -19,21 +16,7 @@ namespace Notes_Backend.Controllers
         {
             _repository = repository;
         }
-
-        // -----------------------------
-        // Helper: get authenticated user id safely
-        // -----------------------------
-        private bool TryGetUserId(out Guid userId)
-        {
-            userId = Guid.Empty;
-
-            var userIdClaim =
-                User.FindFirstValue(ClaimTypes.NameIdentifier)
-                ?? User.FindFirstValue("sub");
-
-            return Guid.TryParse(userIdClaim, out userId);
-        }
-
+        
         // -----------------------------
         // GET: api/notes
         // -----------------------------
@@ -42,12 +25,16 @@ namespace Notes_Backend.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetAll()
         {
-            if (!TryGetUserId(out var userId))
+            // Try to get the current user's ID from claims
+            if (!User.TryGetUserId(out int userId))
                 return Unauthorized();
 
+            // Fetch all notes for this user
             var notes = await _repository.GetAllAsync(userId);
+
             return Ok(notes);
         }
+
 
         // -----------------------------
         // GET: api/notes/{id}
@@ -58,7 +45,7 @@ namespace Notes_Backend.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetById(int id)
         {
-            if (!TryGetUserId(out var userId))
+            if (!User.TryGetUserId(out int userId))
                 return Unauthorized();
 
             var note = await _repository.GetByIdAsync(id, userId);
@@ -76,7 +63,7 @@ namespace Notes_Backend.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Create([FromBody] NotesModel note)
         {
-            if (!TryGetUserId(out var userId))
+            if (!User.TryGetUserId(out var userId))
                 return Unauthorized();
 
             note.UserId = userId;
@@ -96,7 +83,7 @@ namespace Notes_Backend.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Update(int id, [FromBody] NotesModel note)
         {
-            if (!TryGetUserId(out var userId))
+            if (!User.TryGetUserId(out var userId))
                 return Unauthorized();
 
             note.Id = id;
@@ -118,7 +105,7 @@ namespace Notes_Backend.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Delete(int id)
         {
-            if (!TryGetUserId(out var userId))
+            if (!User.TryGetUserId(out int userId))
                 return Unauthorized();
 
             var deleted = await _repository.DeleteAsync(id, userId);
@@ -127,5 +114,7 @@ namespace Notes_Backend.Controllers
 
             return NoContent();
         }
+        
+        
     }
 }

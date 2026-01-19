@@ -108,7 +108,7 @@ const {
   setSearchQuery,
 } = useNotes();
 
-const { signOut } = useAuth();
+const { logout } = useAuth();
 const router = useRouter();
 
 // -----------------------------
@@ -125,7 +125,7 @@ const handleNewNote = async () => {
 };
 
 const handleSignOut = async () => {
-  await signOut();
+  await logout();
   router.push('/auth');
 };
 

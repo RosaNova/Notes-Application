@@ -8,7 +8,7 @@ const routes = [
     path: "/",
     name: "Index",
     component: Index,
-    meta: { requiresAuth: true }, // protected
+    meta: { requiresAuth: true }, 
   },
   {
     path: "/auth",
@@ -29,7 +29,7 @@ const router = createRouter({
 
 // JWT Auth Guard
 router.beforeEach((to) => {
-  const token = localStorage.getItem("token"); // JWT from backend
+  const token = localStorage.getItem("user"); // JWT from backend
 
   // Not logged in → redirect to Auth
   if (to.meta.requiresAuth && !token) {

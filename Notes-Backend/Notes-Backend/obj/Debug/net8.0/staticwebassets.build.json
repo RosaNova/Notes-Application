@@ -1,11 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "ApifcYMeFUm2lF3mE3/97mz7RM6gCqvZp5Jjs8+mrjk=",
-  "Source": "Notes-Backend",
-  "BasePath": "_content/Notes-Backend",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
-}
+{"Version":1,"Hash":"whpAjtnw+burEhA9SKV41iP1+04OM+q3jASI076YsWg=","Source":"Notes-Backend","BasePath":"/","Mode":"Root","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}

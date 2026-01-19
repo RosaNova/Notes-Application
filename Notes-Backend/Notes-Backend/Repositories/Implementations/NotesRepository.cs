@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Notes_Backend.Repositories;
 using Notes_Backend.Models;
 using Dapper;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 
 namespace Notes_Backend.Data
 {
@@ -27,7 +23,7 @@ namespace Notes_Backend.Data
         // -----------------------------
         // Get all notes for a user
         // -----------------------------
-        public async Task<IEnumerable<NotesModel>> GetAllAsync(Guid userId)
+        public async Task<IEnumerable<NotesModel>> GetAllAsync(int userId)
         {
             const string sql = @"
                 SELECT
@@ -54,7 +50,7 @@ namespace Notes_Backend.Data
         // -----------------------------
         // Get single note (user-scoped)
         // -----------------------------
-        public async Task<NotesModel?> GetByIdAsync(int id, Guid userId)
+        public async Task<NotesModel?> GetByIdAsync(int id, int userId)
         {
             const string sql = @"
                 SELECT
@@ -118,7 +114,7 @@ namespace Notes_Backend.Data
         // -----------------------------
         // Delete note (user-protected)
         // -----------------------------
-        public async Task<bool> DeleteAsync(int id, Guid userId)
+        public async Task<bool> DeleteAsync(int id, int userId)
         {
             const string sql = @"
                 DELETE FROM Notes

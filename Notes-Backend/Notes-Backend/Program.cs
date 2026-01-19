@@ -3,6 +3,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Notes_Backend.Data;
 using Notes_Backend.Repositories;
+using Notes_Backend.Repositories.Implementations;
+using Notes_Backend.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -105,6 +107,7 @@ var app = builder.Build();
 // =======================
 // Middleware Pipeline
 // =======================
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

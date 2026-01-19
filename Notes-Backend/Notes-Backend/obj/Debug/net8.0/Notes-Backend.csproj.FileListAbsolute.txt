@@ -75,8 +75,11 @@
 /home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/obj/Debug/net8.0/Notes-Backend.pdb
 /home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/obj/Debug/net8.0/Notes-Backend.genruntimeconfig.cache
 /home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/obj/Debug/net8.0/ref/Notes-Backend.dll
-/home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/obj/Debug/net8.0/staticwebassets/msbuild.Notes-Backend.Microsoft.AspNetCore.StaticWebAssets.props
-/home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/obj/Debug/net8.0/staticwebassets/msbuild.build.Notes-Backend.props
-/home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.Notes-Backend.props
-/home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.Notes-Backend.props
-/home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/obj/Debug/net8.0/staticwebassets.pack.json
+/home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/bin/Debug/net8.0/Notes-Backend.staticwebassets.endpoints.json
+/home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/obj/Debug/net8.0/rpswa.dswa.cache.json
+/home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/obj/Debug/net8.0/rjimswa.dswa.cache.json
+/home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/obj/Debug/net8.0/rjsmrazor.dswa.cache.json
+/home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/obj/Debug/net8.0/rjsmcshtml.dswa.cache.json
+/home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/obj/Debug/net8.0/staticwebassets.build.json.cache
+/home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/obj/Debug/net8.0/staticwebassets.build.endpoints.json
+/home/r-sunrise/Desktop/Back-End Engineer/Web Development/Notes-Application/Notes-Backend/Notes-Backend/obj/Debug/net8.0/swae.build.ex.cache

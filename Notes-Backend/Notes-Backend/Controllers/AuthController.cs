@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using Notes_Backend.Models;
 using Notes_Backend.Repositories.Interfaces;
-
+using Notes_Backend.DTOs;
 namespace Notes_Backend.Controllers
 {
     [ApiController]
@@ -22,18 +22,18 @@ namespace Notes_Backend.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        public async Task<IActionResult> Register([FromBody] RegisterDto request)
         {
             if (await _usersRepository.UserExists(request.Email))
                 return BadRequest(new { message = "Email already registered" });
 
             var newUser = new UserModel
             {
-                Id = Guid.NewGuid(),
-                Username = request.Name,
-                Email = request.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                CreatedAt = DateTime.UtcNow
+              
+                username = request.Username,
+                email = request.Email,
+                password = BCrypt.Net.BCrypt.HashPassword(request.Password),
+               
             };
 
             await _usersRepository.CreateUser(newUser);
@@ -43,10 +43,10 @@ namespace Notes_Backend.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        public async Task<IActionResult> Login([FromBody] LoginDto request)
         {
             var user = await _usersRepository.GetUserByEmail(request.Email);
-            if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
+            if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.password))
                 return Unauthorized(new { message = "Invalid credentials" });
 
             var token = GenerateJwtToken(user);
@@ -59,9 +59,9 @@ namespace Notes_Backend.Controllers
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
+                new Claim(ClaimTypes.Name, user.username),
+                new Claim(ClaimTypes.Email, user.email)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!));
@@ -78,7 +78,4 @@ namespace Notes_Backend.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
-
-    public record RegisterRequest(string Name, string Email, string Password);
-    public record LoginRequest(string Email, string Password);
 }

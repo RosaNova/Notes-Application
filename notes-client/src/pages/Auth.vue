@@ -3,7 +3,7 @@ import { ref, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { z } from 'zod'
 
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth  } from '@/hooks/useAuth'
 import { useToast } from '@/hooks/use-toast'
 
 import Button from '@/components/ui/button/Button.vue'
@@ -60,7 +60,7 @@ const activeTab = ref<'login' | 'register'>('login')
 /* ------------------------------------------------------------------
  * Composables
  * ------------------------------------------------------------------ */
-const { user, loading, register, login, resetPassword } = useAuth()
+const { user, loading, register , logout, login, resetPassword } = useAuth()
 const router = useRouter()
 const { toast } = useToast()
 
@@ -155,6 +155,9 @@ async function handleForgotPassword() {
 }
 
 async function handleSignUp() {
+  // -----------------------------
+  // Validate form (Zod)
+  // -----------------------------
   const result = registerSchema.safeParse({
     fullname: fullname.value,
     email: email.value,
@@ -164,36 +167,61 @@ async function handleSignUp() {
 
   if (!result.success) {
     const fieldErrors: typeof errors.value = {}
+
     result.error.issues.forEach(err => {
-      const path = err.path[0] as string
-      fieldErrors[path as keyof typeof fieldErrors] = err.message
+      const field = err.path[0] as keyof typeof fieldErrors
+      fieldErrors[field] = err.message
     })
+
     errors.value = fieldErrors
     return
   }
 
-  isLoading.value = true
-  const  res = await register(email.value, password.value)
-  isLoading.value = false
+  // Clear previous errors
+  errors.value = {}
 
-  if (res) {
-    let message = res.message
-    if (res.message.includes('User already registered')) {
-      message = 'This email is already registered. Please sign in instead.'
+  // -----------------------------
+  // Submit
+  // -----------------------------
+  isLoading.value = true
+
+  try {
+    const res = await register(
+      fullname.value,
+      email.value,
+      password.value
+    )
+
+    // Same pattern as login(): res === error
+    if (res) {
+      toast({
+        title: 'Sign up failed',
+        description: res.message ?? 'User already registered.',
+        variant: 'destructive',
+      })
+      return
     }
 
-    toast({
-      title: 'Sign up failed',
-      description: message,
-      variant: 'destructive',
-    })
-  } else {
     toast({
       title: 'Account created!',
       description: 'You can now access your notes.',
     })
+
+    // Optional UX improvement
+    activeTab.value = 'login'
+
+  } catch (error) {
+    toast({
+      title: 'Unexpected error',
+      description: 'Something went wrong. Please try again.',
+      variant: 'destructive',
+    })
+  } finally {
+    isLoading.value = false
   }
 }
+
+
 </script>
 
 <template>
