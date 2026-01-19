@@ -14,6 +14,8 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from '@/components/ui/alert-dialog';
+import { ref, watch } from 'vue';
+import { debounce } from 'lodash-es';
 
 // Props
 const props = defineProps<{
@@ -22,28 +24,58 @@ const props = defineProps<{
 
 // Emits
 const emit = defineEmits<{
-  (e: 'update-note', id: string, updates: Partial<Pick<Note, 'title' | 'content'>>): void;
-  (e: 'delete-note', id: string): void;
+  (e: 'update-note', id: number, updates: Partial<Pick<Note, 'title' | 'content'>>): void;
+  (e: 'delete-note', id: number): void;
 }>();
 
-// Handlers
-const updateTitle = (value: string) => {
-  if (!props.note) return;
-  emit('update-note', props.note.id, { title: value });
-};
+// Local state for title and content
+const localTitle = ref('');
+const localContent = ref('');
+const isSyncing = ref(false);
 
-const updateContent = (value: string) => {
-  if (!props.note) return;
-  emit('update-note', props.note.id, { content: value });
-};
+// -----------------------------
+// Sync local state when note changes
+// -----------------------------
+watch(
+  () => props.note,
+  (note) => {
+    if (!note) return;
 
+    isSyncing.value = true;
+    localTitle.value = note.title ?? '';
+    localContent.value = note.content ?? '';
+
+    // allow next tick before ending syncing
+    setTimeout(() => (isSyncing.value = false), 0);
+  },
+  { immediate: true }
+);
+
+// -----------------------------
+// Auto-save debounced
+// -----------------------------
+const save = debounce(() => {
+  if (!props.note || isSyncing.value) return;
+
+  emit('update-note', props.note.id, {
+    title: localTitle.value,
+    content: localContent.value,
+  });
+}, 500);
+
+// Watch local title/content for changes
+watch([localTitle, localContent], () => save());
+
+// -----------------------------
+// Delete note
+// -----------------------------
 const deleteNote = () => {
-  if (!props.note) return;
-  emit('delete-note', props.note.id);
+  if (props.note) emit('delete-note', props.note.id);
 };
 </script>
 
 <template>
+  <!-- Empty state -->
   <div v-if="!props.note" class="flex-1 flex items-center justify-center bg-background">
     <div class="text-center text-muted-foreground">
       <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
@@ -54,12 +86,16 @@ const deleteNote = () => {
     </div>
   </div>
 
+  <!-- Note editor -->
   <div v-else class="flex-1 flex flex-col bg-background">
+    
     <!-- Toolbar -->
     <div class="flex items-center justify-between px-6 py-3 border-b border-border">
       <div class="flex items-center gap-2 text-xs text-muted-foreground">
         <Clock class="w-3.5 h-3.5" />
-        <span>Updated {{ format(props.note.updatedAt, 'MMM d, yyyy · h:mm a') }}</span>
+        <span>
+          Updated {{ format(new Date(note.updatedAt), 'MMM d, yyyy · h:mm a') }}
+        </span>
       </div>
 
       <AlertDialog>
@@ -98,16 +134,14 @@ const deleteNote = () => {
         <!-- Title -->
         <input
           type="text"
-          :value="props.note.title"
-          @input="updateTitle(($event.target as HTMLInputElement).value)"
+          v-model="localTitle"
           placeholder="Note title..."
           class="w-full text-3xl font-serif font-semibold bg-transparent border-none outline-none placeholder:text-muted-foreground/50 mb-6"
         />
 
         <!-- Content -->
         <textarea
-          :value="props.note.content"
-          @input="updateContent(($event.target as HTMLTextAreaElement).value)"
+          v-model="localContent"
           placeholder="Start writing your note..."
           class="w-full min-h-[60vh] text-base leading-relaxed bg-transparent border-none outline-none resize-none placeholder:text-muted-foreground/50"
         />

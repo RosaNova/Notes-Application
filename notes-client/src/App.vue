@@ -5,7 +5,7 @@ import TooltipProvider from "@/components/ui/tooltip/TooltipProvider.vue";
 
 <template>
   <TooltipProvider>
-    <Sonner />
+    <Sonner rich-colors />
     <RouterView />
   </TooltipProvider>
 </template>

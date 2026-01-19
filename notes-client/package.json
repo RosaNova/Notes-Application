@@ -15,16 +15,20 @@
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/vue-query": "^5.92.6",
     "@vueuse/core": "^14.1.0",
+    "axios": "^1.13.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "lodash-es": "^4.17.22",
     "lucide-vue-next": "^0.562.0",
     "reka-ui": "^2.7.0",
+    "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18",
     "vue": "^3.5.26",
     "vue-router": "^4.6.4",
-    "vue-sonner": "^2.0.9"
+    "vue-sonner": "^2.0.9",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.3",
